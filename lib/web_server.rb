@@ -12,7 +12,7 @@ class WebServer
       client = tcp_server.accept
       # binding.pry
       request = Diagnostic.parse_requests(client)
-      Parser.new.route(request)
+      Parser.new.route(request) #not working yet
       client.close
     end
   end
