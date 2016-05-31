@@ -13,8 +13,6 @@ class Parser
 
   def initialize(request_lines)
     # binding.pry
-    hw_count = 0
-    @hello_world = "Hello, world! #{hw_count}"
     @verb = "VERB: #{request_lines[0].split[0]}"
     @path = "PATH: #{request_lines[0].split[1]}"
     @protocol = "PROTOCOL: #{request_lines[0].split[2]}"
@@ -25,9 +23,10 @@ class Parser
   end
 
 
-  # def hello_world
-  #   "Hello, world! (#{hw_count})"
-  #   hw_count += 1
-  # end
+  def hello_world
+    hw_count = 0
+    "Hello, world! (#{hw_count})"
+    hw_count += 1
+  end
 
 end
