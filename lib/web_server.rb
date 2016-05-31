@@ -3,16 +3,18 @@ require './lib/diagnostic'
 require './lib/parser'
 require 'pry'
 
-
 class WebServer
 
   def server_loop
     tcp_server = TCPServer.new(9292)
+    parser = Parser.new
     loop do
       client = tcp_server.accept
-      # binding.pry
       request = Diagnostic.parse_requests(client)
-      Parser.new.route(request) #not working yet
+      # binding.pry
+      headers, output = parser.route(request) #not working yet
+      client.puts headers
+      client.puts output
       client.close
     end
   end
