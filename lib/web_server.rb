@@ -17,7 +17,8 @@ class WebServer
     while @looping #needs to be until/while loop, not sure how to implement
       client = tcp_server.accept
       request = Diagnostic.parse_requests(client)
-      response = parser.response(request)
+      # binding.pry
+      response = parser.route(request)
       # headers, output = parser.route(request)
       # client.puts headers
       client.puts response
