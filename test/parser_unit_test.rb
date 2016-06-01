@@ -7,20 +7,27 @@ class ParserTest < Minitest::Test
 
   def setup
     @parser = Parser.new
+    @request = {}
   end
 
   def test_route_hello
-    @parser.route("/hello")
-    assert_equal ["http/1.1 200 ok\r\n\r\n", hello_world]
+    @request = {'Path' => "/hello"}
+    assert @parser.route(@request).include?("http/1.1 200 ok\r\n\r\n")
   end
 
   def test_route_datetime
-    @parser.route("/datetime")
-    assert @parser.route("/datetime").include?("date:")
+    @request = {'Path' => "/datetime"}
+    assert @parser.route(@request).include?("date:")
+  end
+
+  def test_route_root
+    @request = {'Path' => "/"}
+    binding.pry
+    assert @parser.route(@request).include?("<html><head></head><body><pre>\n{\"Path\"=>\"/\"}</pre></body></html>")
   end
 
   def test_route_shutdown
-    @parser.route("/shutdown")
-    assert @parser.route("/shutdown").include?("Total requests:")
+    @request = {'Path' => "/shutdown"}
+    assert @parser.route(@request).include?("Total requests:")
   end
 end
