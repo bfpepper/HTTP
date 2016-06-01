@@ -1,21 +1,18 @@
 require 'faraday'
 require 'minitest/autorun'
 require 'minitest/nyan_cat'
+require '/lib/web_server'
 require 'pry'
 
-class ServerTest < Minitest::Test
+class WebServerTest < Minitest::Test
 
   def test_it_can_get_home_page
-    conn = Faraday.new(:url => 'http://127.0.0.1:9292')
-    response = conn.get
-    response.body
+    response = Faraday.get 'http://127.0.0.1:9292'
     assert response.body.include?("\"Verb\"=>\"GET\"")
   end
 
   def test_it_can_get_hello_world
-    conn = Faraday.new(:url => 'http://127.0.0.1:9292/hello')
-    response = conn.get
-    response.body
+    response = Faraday.get 'http://127.0.0.1:9292/hello'
     assert response.body.include?("Hello, world!")
   end
 
@@ -24,9 +21,8 @@ class ServerTest < Minitest::Test
     conn = Faraday.new(:url => 'http://127.0.0.1:9292/hello')
     response1 = conn.get
     first = response1.body[-3].to_i
-    # binding.pry
     response2 = conn.get
-    second = response2.body[-3].to_i# => "Hello, world! (9)"
+    second = response2.body[-3].to_i
     assert_equal 1, second - first
   end
 
