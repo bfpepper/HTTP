@@ -22,7 +22,6 @@ class ParserTest < Minitest::Test
 
   def test_route_root
     @request = {'Path' => "/"}
-    binding.pry
     assert @parser.route(@request).include?("<html><head></head><body><pre>\n{\"Path\"=>\"/\"}</pre></body></html>")
   end
 
