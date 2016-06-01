@@ -2,7 +2,7 @@
 class Diagnostic
   attr_reader :request
 
-  def self.parse_requests(client)
+  def parse_requests(client)
     request_lines = []
     request = {}
     index = 0

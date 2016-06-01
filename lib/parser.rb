@@ -21,7 +21,7 @@ class Parser
     if request['Path'] == "/hello"
       ["http/1.1 200 ok\r\n\r\n", hello_world]
     elsif request['Path'] == "/datetime"
-      puts "strftime thing"
+      puts "date: #{Time.now.strftime('%a, %e %b %Y %H:%M:%S %z')}"
     elsif request['Path'] == "/shutdown"
       puts "Total requests: #{all_count}"
       client.close
