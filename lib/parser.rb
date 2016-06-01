@@ -3,8 +3,7 @@ require './lib/web_server'
 require 'pry'
 
 class Parser
-  attr_reader :request_lines,
-  :hello_world,
+  attr_reader :hello_world,
   :route
 
   def initialize
@@ -41,8 +40,9 @@ class Parser
       puts ["Wrote this response:", headers, output].join("\n")
         response = [headers, output]
         @all_count +=1
-        # client.puts headers
-        # client.puts output
+    elsif request['Path'].include? "/word_search"
+      word = request['Path'].partition('=').last
+      word_search(word)
     end
     response
   end
@@ -51,5 +51,9 @@ class Parser
     result =  "Hello, world! (#{@hello_world})"
     @hello_world += 1
     result
+  end
+
+  def word_search(word)
+    
   end
 end
