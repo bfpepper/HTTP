@@ -1,6 +1,6 @@
 require 'socket'
-require './lib/diagnostic'
-require './lib/parser'
+require './lib/request_parser'
+require './lib/router'
 require 'pry'
 
 class WebServer
@@ -13,12 +13,12 @@ class WebServer
 
   def server_loop
     tcp_server = TCPServer.new(9292)
-    parser = Parser.new
+    router = Router.new
     while @looping #needs to be until/while loop, not sure how to implement
       client = tcp_server.accept
-      request = Diagnostic.parse_requests(client)
-      binding.pry
-      response = parser.route(request)
+      request = RequestParser.parse_requests(client)
+      response = router.response(request)
+      # binding.pry
       # headers, output = parser.route(request)
       # client.puts headers
       client.puts response

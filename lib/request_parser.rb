@@ -1,6 +1,6 @@
 require 'pry'
 
-class Diagnostic
+class RequestParser
   attr_reader :request
 
   def self.parse_requests(client)
@@ -18,7 +18,6 @@ class Diagnostic
       end
       index += 1
     end
-    binding.pry
     request
   end
 
