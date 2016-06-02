@@ -31,28 +31,21 @@
 #below is the remains of route method, make sure to change all calls to response
 def response(request)
   @all_count += 1
-  respond = "<pre>\n#{request.each { |k, v| puts k + ": " + v }}</pre>"
-  output = "<html><head></head><body>#{content}\n\n#{respond}</body></html>"
+  diag = "<pre>\n#{request.each { |k, v| puts k + ": " + v }}</pre>"
+  output = "<html><head></head><body>#{content(request)}\n\n#{diag}</body></html>"
   headers = ["http/1.1 200 ok",
     "date: #{Time.now.strftime('%a, %e %b %Y %H:%M:%S %z')}",
     "server: ruby",
     "content-type: text/html; charset=iso-8859-1",
     "content-length: #{output.length}\r\n\r\n"].join("\r\n")
 
-    #below should be parser class
-
-    content = hello_world         if request['Path'] == "/hello"
-    content = datetime            if request['Path'] == "/datetime"
-    content = shutdown            if request['Path'] == "/shutdown"
-    content = ""                  if request['Path'] == "/"
-    content = word_search(word)   if request['Path'].include? "/word_search"
-
-    #below should be responder class
-
-    puts "Sending response."
-    puts ["Wrote this response:", headers, output].join("\n")
-
-    #not sure where to put these...parser class probably?
+def content(request)
+  ""                  if request['Path'] == "/"
+  hello_world         if request['Path'] == "/hello"
+  datetime            if request['Path'] == "/datetime"
+  shutdown            if request['Path'] == "/shutdown"
+  word_search(word)   if request['Path'].include? "/word_search"
+end
 
     def hello_world
       @hello_world += 1
@@ -72,3 +65,8 @@ def response(request)
       word_included ? "#{word} is a known word" : "#{word} is not a known word"
       end
     end
+
+    #below should be responder class
+
+    puts "Sending response."
+    puts ["Wrote this response:", headers, output].join("\n")
