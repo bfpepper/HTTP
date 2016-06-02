@@ -1,5 +1,4 @@
 require './lib/diagnostic'
-require './lib/web_server'
 require 'pry'
 
 class Parser
@@ -9,13 +8,7 @@ class Parser
   def initialize
     @hello_world = 0
     @all_count = 0
-    # @verb = "#{request_lines[0].split[0]}"
-    # @path = "#{request_lines[0].split[1]}"
-    # @protocol = "#{request_lines[0].split[2]}"
-    # @host = "#{request_lines[1].split[1].split(':')[0]}"
-    # @port = "#{request_lines[1].split[1].split(':')[1]}"
-    # @origin = "#{request_lines[1].split[1]}"
-    # @accept = "#{request_lines[6].split[1]}"
+
   end
 
   def route(request)

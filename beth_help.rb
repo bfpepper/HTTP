@@ -52,10 +52,11 @@ def response(request)
     puts "Sending response."
     puts ["Wrote this response:", headers, output].join("\n")
 
+    #not sure where to put these...parser class probably?
+
     def hello_world
-      result =  "Hello, world! (#{@hello_world})"
       @hello_world += 1
-      result
+      "Hello, world! (#{@hello_world})"
     end
 
     def datetime
