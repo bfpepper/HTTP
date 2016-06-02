@@ -1,34 +1,48 @@
 require './lib/request_parser'
+require './lib/game_controller'
 require 'pry'
 
 class Router
-  attr_reader :hello_world,
-  :route, :response
+  attr_reader :route, :response
 
   def initialize
     @hello_world = 0
     @all_count = 0
+    @game = GameController.new
   end
 
   def response(request)
     @all_count += 1
-    diag = "<pre>\n#{request.each { |k, v| puts k + ": " + v }}</pre>"
-    body = "<html><head></head><body>#{content(request)}\n\n#{diag}</body></html>"
+    something = content(request)
+    diag = "<pre>\n#{request.map { |k, v| k + ": " + v  }.join("\n")}\n</pre>"
+    body = "<html><head></head><body>#{something}\n#{diag}</body></html>"
     headers = ["http/1.1 200 ok",
       "date: #{Time.now.strftime('%a, %e %b %Y %H:%M:%S %z')}",
       "server: ruby",
       "content-type: text/html; charset=iso-8859-1",
-      "content-length: #{body.length}\r\n\r\n"].join("\r\n")
-    response = headers + body
+      "content-length: #{body.length}\n\n"].join("\n")
+    headers + body
   end
 
   def content(request)
-      ""                  if request['Path'] == "/"
-      hello_world         if request['Path'] == "/hello"
-      datetime            if request['Path'] == "/datetime"
-      shutdown            if request['Path'] == "/shutdown"
-      word_search(word)   if request['Path'].include? "/word_search"
+    if request['Path'] == "/"
+      ""
+    elsif request['Path'] == "/hello"
+      hello_world
+    elsif request['Path'] == "/datetime"
+      datetime
+    elsif request['Path'] == "/shutdown"
+      return shutdown
       # binding.pry
+    elsif request['Path'].include? "/word_search"
+      word = request['Path'].partition('=').last
+      word_search(word)
+    elsif request['Verb'] == "POST" && request['Path'] == "/start_game"
+      @game.start
+      "Good luck!"
+    else
+      "404"
+    end
   end
 
   def hello_world

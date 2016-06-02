@@ -18,10 +18,8 @@ class WebServer
       client = tcp_server.accept
       request = RequestParser.parse_requests(client)
       response = router.response(request)
-      # binding.pry
-      # headers, output = parser.route(request)
-      # client.puts headers
       client.puts response
+      @looping = false if response.split.include?"/shutdown"
       client.close
     end
   end
