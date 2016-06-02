@@ -1,3 +1,4 @@
+require 'pry'
 
 class Diagnostic
   attr_reader :request
@@ -17,6 +18,7 @@ class Diagnostic
       end
       index += 1
     end
+    binding.pry
     request
   end
 
