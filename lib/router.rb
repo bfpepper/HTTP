@@ -21,6 +21,7 @@ class Router
       "server: ruby",
       "content-type: text/html; charset=iso-8859-1",
       "content-length: #{body.length}\n\n"].join("\n")
+      binding.pry
     headers + body
   end
 
@@ -47,11 +48,8 @@ class Router
     end
   end
 
-
-
   def hello_world
     @hello_world += 1
-    # binding.pry
     "Hello, world! (#{@hello_world})"
   end
 
