@@ -15,21 +15,11 @@ class GameController
   def guess(guess_num)
     @guess_counter += 1
     if guess_num > @win_num
-      return "your guess of #{guess_num} was too high. you've guessed #{@guess_counter} times."
+      return "your guess of #{guess_num} was too high. you've guessed #{@guess_counter} time(s)."
     elsif guess_num < @win_num
-      return "your guess of #{guess_num} was too low. you've guessed #{@guess_counter} times."
+      return "your guess of #{guess_num} was too low. you've guessed #{@guess_counter} time(s)."
     elsif guess_num == @win_num
-      return "your guess of #{guess_num} was just right! you guessed #{@guess_counter} times."
+      return "your guess of #{guess_num} was just right! you guessed #{@guess_counter} time(s)."
     end
-
   end
-#
-# end
-#
-#
-# guess_num = path
 end
-
-# principles
-# word_included = File.read("/usr/share/dict/words").split("\n").include?(word)
-# word_included ? "#{word} is a known word" : "#{word} is not a known word"
