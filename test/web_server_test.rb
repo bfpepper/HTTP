@@ -7,7 +7,6 @@ require 'pry'
 class WebServerTest < Minitest::Test
 
   def test_it_can_get_home_page
-
     response = Faraday.get 'http://127.0.0.1:9292'
     assert response.body.include?("Verb: GET")
   end
@@ -26,15 +25,13 @@ class WebServerTest < Minitest::Test
   end
 
   def test_it_can_start_the_game
-    skip
     response = Faraday.post 'http://127.0.0.1:9292/start_game'
-    binding.pry
     assert response.body.include?("Verb: POST")
   end
 
-  def test_it_can_get_shutdown
-    skip #this kills the server
-    response = Faraday.get 'http://127.0.0.1:9292/shutdown'
-    assert response.body.include?("shutdown")
+  def test_it_can_play_the_game
+    Faraday.post 'http://127.0.0.1:9292/start_game'
+    response = Faraday.post 'http://127.0.0.1:9292/game?guess=0'
+    assert response.body.include?("you've guessed 1 time(s).")
   end
 end
