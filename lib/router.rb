@@ -41,7 +41,7 @@ class Router
       ["Good luck!", "HTTP/1.1 200 OK"]
     elsif request['Verb'] == "POST" && request['Path'].include?("/game")
       guess_num = request['Path'].partition('=').last.to_i
-      [@game.guess(guess_num), "HTTP/1.1 302 FOUND\nLocation: 127.0.0.1:9292/game"]
+      [@game.guess(guess_num), "HTTP 1.1 302 FOUND\nLocation: http://127.0.0.1:9292/game"]
     else
       "404"
     end

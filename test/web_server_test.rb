@@ -28,10 +28,4 @@ class WebServerTest < Minitest::Test
     response = Faraday.post 'http://127.0.0.1:9292/start_game'
     assert response.body.include?("Verb: POST")
   end
-
-  def test_it_can_play_the_game
-    Faraday.post 'http://127.0.0.1:9292/start_game'
-    response = Faraday.post 'http://127.0.0.1:9292/game?guess=0'
-    assert response.body.include?("you've guessed 1 time(s).")
-  end
 end
