@@ -35,13 +35,4 @@ class RouterTest < Minitest::Test
     request = {'Path' => "/word_search?=face"}
     assert_equal "face is a known word", router.content(request)[0]
   end
-
-  def test_route_start_game_does_so
-    request = {'Path' => "/start_game"}
-    assert_equal "Good luck!", router.content(request)[0]
-  end
-
-  def test_route_game_redirects
-    request = {'Path' => "/game?=100"}
-    assert_equal "HTTP/1.1 302 FOUND\nLocation: 127.0.0.1:9292/game", router.content(request)[1]
 end

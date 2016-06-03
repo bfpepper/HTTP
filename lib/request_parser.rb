@@ -10,7 +10,6 @@ class RequestParser
     while line = client.gets and !line.chomp.empty?
       request_lines << line.chomp
       if index == 0
-        #add to hash here
         (request['Verb'], request['Path'], request['Protocol']) =line.chomp.split
       else
         (key, value) = line.chomp.split(": ")
@@ -20,5 +19,4 @@ class RequestParser
     end
     request
   end
-
 end
