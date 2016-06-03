@@ -4,6 +4,8 @@ require './lib/router'
 require 'pry'
 
 class WebServer
+  attr_accessor :looping
+  attr_reader :all_count
 
   def initialize
     @looping = true

@@ -21,7 +21,6 @@ class Router
       "server: ruby",
       "content-type: text/html; charset=iso-8859-1",
       "content-length: #{body.length}\n\n"].join("\n")
-      binding.pry
     headers + body
   end
 
