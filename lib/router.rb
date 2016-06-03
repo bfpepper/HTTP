@@ -40,6 +40,9 @@ class Router
     elsif request['Verb'] == "POST" && request['Path'] == "/start_game"
       @game.start
       "Good luck!"
+    elsif request['Verb'] == "POST" && request['Path'].include?("/game")
+      guess_num = request['Path'].partition('=').last.to_i
+      @game.guess(guess_num)
     else
       "404"
     end
