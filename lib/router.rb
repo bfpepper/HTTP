@@ -13,40 +13,43 @@ class Router
 
   def response(request)
     @all_count += 1
-    something = content(request)
+    content = content(request)
     diag = "<pre>\n#{request.map { |k, v| k + ": " + v  }.join("\n")}\n</pre>"
-    body = "<html><head></head><body>#{something}\n#{diag}</body></html>"
-    headers = ["http/1.1 200 ok",
+    body = "<html><head></head><body>#{content[0]}\n#{diag}</body></html>"
+    headers = ["#{content[1]}",
       "date: #{Time.now.strftime('%a, %e %b %Y %H:%M:%S %z')}",
       "server: ruby",
       "content-type: text/html; charset=iso-8859-1",
       "content-length: #{body.length}\n\n"].join("\n")
+      binding.pry
     headers + body
   end
 
   def content(request)
     if request['Path'] == "/"
-      ""
+      ["", "HTTP 1.1 200 OK"]
     elsif request['Path'] == "/hello"
-      hello_world
+      [hello_world, "HTTP 1.1 200 OK"]
     elsif request['Path'] == "/datetime"
-      datetime
+      [datetime, "HTTP 1.1 200 OK"]
     elsif request['Path'] == "/shutdown"
-      return shutdown
+      [shutdown, "HTTP 1.1 200 OK"]
       # binding.pry
     elsif request['Path'].include? "/word_search"
       word = request['Path'].partition('=').last
-      word_search(word)
+      [word_search(word), "HTTP 1.1 200 OK"]
     elsif request['Verb'] == "POST" && request['Path'] == "/start_game"
       @game.start
-      "Good luck!"
+      ["Good luck!", "HTTP 1.1 200 OK"]
     elsif request['Verb'] == "POST" && request['Path'].include?("/game")
       guess_num = request['Path'].partition('=').last.to_i
-      @game.guess(guess_num)
+      [@game.guess(guess_num), "HTTP 1.1 302 FOUND\nLocation: 127.0.0.1:9292/game"]
     else
       "404"
     end
   end
+
+
 
   def hello_world
     @hello_world += 1

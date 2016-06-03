@@ -21,7 +21,7 @@ class GameController
     elsif guess_num == @win_num
       return "your guess of #{guess_num} was just right! you guessed #{@guess_counter} times."
     end
-    
+
   end
 #
 # end
